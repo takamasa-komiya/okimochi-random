@@ -1,6 +1,6 @@
 const content = document.getElementById("content"); //root content
 
-class okimochiCharacter {
+class OkimochiCharacter {
     constructor(character){
         this.character = character;
         this.node = document.createElement("div");
@@ -12,7 +12,7 @@ class okimochiCharacter {
     }
 }
 
-class okimochiContainer {
+class OkimochiContainer {
     constructor(...args){
         this.node = document.createElement("div");
         content.appendChild(this.node);
@@ -20,13 +20,11 @@ class okimochiContainer {
         for(let i = 0; i < args.length; i++){
             this.node.appendChild(args[i].node);
         }
-
-        this.styleList = ["row","row-reverse","column","column-reverse"];
-        this.choiceStyle();
     }
 
     choiceStyle(){
-        const className = "okimochi " + this.styleList[Math.floor(Math.random() * this.styleList.length)];
+        const styleList = ["row","row-reverse","column","column-reverse"];
+        const className = "okimochi " + styleList[Math.floor(Math.random() * styleList.length)];
         this.node.className = className;
         const rand = Math.random() * 3;
         if(rand < 1) this.node.style.alignItems = "center";
@@ -34,8 +32,12 @@ class okimochiContainer {
     }
 }
 
-const O = new okimochiCharacter("お")
-const KI = new okimochiCharacter("き")
-const MO = new okimochiCharacter("も")
-const CHI = new okimochiCharacter("ち")
-const allOKIMOCHI = new okimochiContainer(O,KI,MO,CHI)
+const O = new OkimochiCharacter("お")
+const KI = new OkimochiCharacter("き")
+const MO = new OkimochiCharacter("も")
+const CHI = new OkimochiCharacter("ち")
+const allOKIMOCHI = new OkimochiContainer(O,KI,MO,CHI)
+allOKIMOCHI.choiceStyle();
+
+//"お"をクリックでリフレッシュ
+O.node.addEventListener("click",allOKIMOCHI.choiceStyle.bind(allOKIMOCHI),false);
