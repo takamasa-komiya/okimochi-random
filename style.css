@@ -1,8 +1,28 @@
 body {
     background-color: black;
-    color: white;
 }
 
-#content {
-    height: 100%;
+.okimochi {
+    display: flex;
+    height: 100vh;
+}
+
+.row {   
+    flex-direction: row;
+    font-size: 24vw;
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+    font-size: 24vw;
+}
+
+.column {
+    flex-direction: column;
+    font-size: 16vh;
+}
+
+.column-reverse{
+    flex-direction: column-reverse;
+    font-size: 16vh;
 }
