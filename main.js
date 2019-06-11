@@ -5,8 +5,10 @@ class OkimochiCharacter {
         this.character = character;
         this.node = document.createElement("div");
         this.node.textContent = character;
-        this.node.className = "okimochi-char";
+        this.node.className = "okimochi-char";    
+    }
 
+    choiceColor(){
         const colorList = ["red", "lightblue", "lightgreen", "yellow", "white"];
         this.node.style.color = colorList[(Math.floor(Math.random() * 100) % colorList.length)]
     }
@@ -14,21 +16,28 @@ class OkimochiCharacter {
 
 class OkimochiContainer {
     constructor(...args){
+        this.args = args;
         this.node = document.createElement("div");
         content.appendChild(this.node);
+        args.forEach(e => this.node.appendChild(e.node))
 
-        for(let i = 0; i < args.length; i++){
-            this.node.appendChild(args[i].node);
-        }
+        this.setIntervalHandle = false;
     }
 
     choiceStyle(){
         const styleList = ["row","row-reverse","column","column-reverse"];
-        const className = "okimochi " + styleList[Math.floor(Math.random() * styleList.length)];
+        const alignList = ["flex-start","center","flex-end"];
+        const className = ["okimochi",styleList[Math.floor(Math.random() * styleList.length)],alignList[Math.floor(Math.random() * alignList.length)]].join(" ");
         this.node.className = className;
-        const rand = Math.random() * 3;
-        if(rand < 1) this.node.style.alignItems = "center";
-        else if(rand < 2) this.node.style.alignItems = "flex-end";
+        this.args.forEach(e => e.choiceColor());
+    }
+
+    okimochiAutoReflesh(){
+        const setIntervalHandle = this.setIntervalHandle;
+        const refleshTime = 5000;
+        clearInterval(setIntervalHandle);
+        if(!setIntervalHandle) this.setIntervalHandle = setInterval(this.choiceStyle.bind(this), refleshTime);
+        else this.setIntervalHandle = false;
     }
 }
 
@@ -39,5 +48,5 @@ const CHI = new OkimochiCharacter("ち")
 const allOKIMOCHI = new OkimochiContainer(O,KI,MO,CHI)
 allOKIMOCHI.choiceStyle();
 
-//"お"をクリックでリフレッシュ
 O.node.addEventListener("click",allOKIMOCHI.choiceStyle.bind(allOKIMOCHI),false);
+CHI.node.addEventListener("click",allOKIMOCHI.okimochiAutoReflesh.bind(allOKIMOCHI),false);

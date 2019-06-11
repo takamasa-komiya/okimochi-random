@@ -7,6 +7,18 @@ body {
     height: 100vh;
 }
 
+.flex-start {
+    align-items: flex-start;
+}
+
+.center {
+    align-items: center;
+}
+
+.flex-end {
+    align-items: flex-end;
+}
+
 .row {   
     flex-direction: row;
     font-size: 24vw;
